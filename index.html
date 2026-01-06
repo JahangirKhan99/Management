@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Billing Management System</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      min-height: 100vh;
+      color: white;
+      padding-top: 50px;
+    }
+
+    .status-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #10b981;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      z-index: 1000;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    .welcome-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 2s forwards;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    .welcome-content {
+      text-align: center;
+      animation: scaleIn 0.5s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .welcome-logo {
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 30px;
+      margin: 0 auto 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      font-weight: bold;
+      color: #667eea;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .welcome-text {
+      font-size: 48px;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 14px 28px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input:focus, select:focus {
+      border-color: #667eea;
+    }
+
+    button {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      margin-right: 5px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+
+    .edit-btn {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .cancel-btn {
+      background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    }
+
+    .summary {
+      margin: 30px 0;
+      padding: 20px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .summary-item {
+      text-align: center;
+    }
+
+    .summary-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 5px;
+    }
+
+    .summary-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #6ee7b7;
+    }
+
+    .alert {
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .pdf-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .download-btn {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .backup-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .backup-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .backup-card h3 {
+      margin-bottom: 15px;
+      color: #667eea;
+    }
+
+    #reportType {
+      color: #ef4444 !important;
+      font-weight: 600 !important;
+    }
+
+    #reportType option {
+      color: #000;
+      background: #fff;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+      <div class="welcome-logo">P/O</div>
+      <div class="welcome-text">Welcome To Post Office of Swari Buner</div>
+    </div>
+  </div>
+
+  <div class="status-bar">✓ Online Mode</div>
+
+  <div class="container" id="mainApp" style="display: none;">
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <h1>Post Office Sawari Buner</h1>
+          <p style="color: rgba(255, 255, 255, 0.6); margin-top: 5px;">Billing Management System</p>
+        </div>
+        
+        <!-- User Profile Section -->
+        <div style="display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 12px; cursor: pointer; border: 2px solid rgba(102, 126, 234, 0.3);" onclick="openProfileSettings()">
+          <div style="position: relative;">
+            <img id="userProfilePic" src="" style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid #667eea; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div style="position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; background: #10b981; border: 3px solid #1a1a2e; border-radius: 50%;" title="Active"></div>
+          </div>
+          <div>
+            <div id="userName" style="font-weight: 700; font-size: 17px; color: white;">Guest User</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.6);">👤 Click to edit profile</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('entry')">➕ Data Entry</button>
+      <button class="tab" onclick="switchTab('barcode')">📷 Barcode Entry</button>
+      <button class="tab" onclick="switchTab('view')">🔍 View Records</button>
+      <button class="tab" onclick="switchTab('reports')">📊 Reports</button>
+      <button class="tab" onclick="switchTab('backup')">💾 Backup</button>
+      <button class="tab" onclick="switchTab('supabase')">☁️ Online Sync</button>
+      <button class="tab" onclick="switchTab('profile')">👤 Profile</button>
+    </div>
+
+    <div class="card">
+      <!-- Data Entry Tab -->
+      <div id="entryTab" class="tab-content active">
+        <h2 style="margin-bottom: 30px;">Add New Record</h2>
+        <div id="entryAlert"></div>
+
+        <form onsubmit="handleAddRecord(event)">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div class="form-group">
+              <label>Reference Number *</label>
+              <input type="text" id="refNumber" required>
+            </div>
+            <div class="form-group">
+              <label>Amount (Rs) *</label>
+              <input type="number" id="amount" step="0.01" required>
+            </div>
+          </div>
+          <button type="submit">➕ Add Record</button>
+        </form>
+
+        <!-- Recent Entries Section -->
+        <div style="margin-top: 40px;">
+          <h3 style="margin-bottom: 20px; color: #667eea;">📋 Recent 10 Entries</h3>
+          <div id="recentEntries"></div>
+        </div>
+      </div>
+
+      <!-- Barcode Entry Tab -->
+      <div id="barcodeTab" class="tab-content">
+        <h2 style="margin-bottom: 30px;">📷 Camera Barcode Scanner</h2>
+        <div id="barcodeAlert"></div>
+
+        <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+          <h3 style="color: #667eea; margin-bottom: 15px;">📱 Continuous Scanning Mode:</h3>
+          <ul style="line-height: 2; padding-left: 20px;">
+            <li>Click "Start Camera" once</li>
+            <li>Allow camera permission</li>
+            <li>Scan barcode → Enter amount → Save</li>
+            <li>Camera stays ON - Keep scanning!</li>
+            <li>Click "Stop Camera" when done</li>
+          </ul>
+        </div>
+
+        <!-- Camera Scanner -->
+        <div style="margin-bottom: 30px;">
+          <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center;">
+            <button type="button" onclick="startBarcodeScanner()" id="startScanBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+              📷 Start Camera
+            </button>
+            <button type="button" onclick="stopBarcodeScanner()" id="stopScanBtn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); display: none;">
+              🛑 Stop Camera
+            </button>
+            <div id="scanStatus" style="padding: 10px 20px; background: rgba(16, 185, 129, 0.2); border-radius: 8px; font-weight: 600; color: #10b981; display: none;">
+              📷 Camera Active - Ready to Scan
+            </div>
+          </div>
+          
+          <!-- Camera Preview -->
+          <div id="barcode-reader" style="width: 100%; max-width: 600px; margin: 0 auto; border-radius: 12px; overflow: hidden; display: none; border: 3px solid #10b981;"></div>
+        </div>
+
+        <!-- Entry Form -->
+        <form onsubmit="handleBarcodeAddRecord(event)" id="barcodeForm">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div class="form-group">
+              <label>📷 Scanned Barcode *</label>
+              <input type="text" id="barcodeRefNumber" required readonly style="background: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; font-size: 20px; font-weight: 700; color: #10b981; text-align: center; padding: 18px;">
+            </div>
+            <div class="form-group">
+              <label>Amount (Rs) *</label>
+              <input type="number" id="barcodeAmount" step="0.01" required placeholder="Enter amount" style="font-size: 20px; font-weight: 600; padding: 18px;">
+            </div>
+          </div>
+          
+          <button type="submit" style="font-size: 18px; padding: 18px 50px; width: 100%;">➕ Save Entry (Camera Stays On)</button>
+        </form>
+
+        <!-- Quick Stats -->
+        <div style="margin: 30px 0; padding: 20px; background: rgba(16, 185, 129, 0.1); border: 2px solid #10b981; border-radius: 12px; display: none;" id="scanStats">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center;">
+            <div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.7);">Scans Today</div>
+              <div style="font-size: 28px; font-weight: 800; color: #10b981;" id="scansToday">0</div>
+            </div>
+            <div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.7);">Last Scanned</div>
+              <div style="font-size: 16px; font-weight: 700; color: #10b981;" id="lastScanned">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Barcode Entries -->
+        <div style="margin-top: 40px;">
+          <h3 style="margin-bottom: 20px; color: #667eea;">📋 Recent Camera Scans</h3>
+          <div id="barcodeRecentEntries"></div>
+        </div>
+      </div>
+
+      <!-- View Records Tab -->
+      <div id="viewTab" class="tab-content">
+        <h2 style="margin-bottom: 30px;">View & Manage Records</h2>
+        <div style="position: relative; margin-bottom: 20px;">
+          <input type="text" id="searchInput" placeholder="Search by S.No or Reference..." onkeyup="filterRecords()" style="padding-left: 45px;">
+        </div>
+        <div id="recordsTable"></div>
+      </div>
+
+      <!-- Reports Tab -->
+      <div id="reportsTab" class="tab-content">
+        <h2 style="margin-bottom: 30px;">Generate Reports</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+          <div class="form-group">
+            <label>Report Type</label>
+            <select id="reportType">
+              <option value="daily">Daily Report</option>
+              <option value="weekly">Weekly Report</option>
+              <option value="monthly">Monthly Report</option>
+              <option value="yearly">Yearly Report</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Select Date</label>
+            <input type="date" id="reportDate">
+          </div>
+        </div>
+        <button onclick="generateReport()">📄 Generate Report</button>
+        <div id="reportPreview" style="margin-top: 30px;"></div>
+      </div>
+
+      <!-- Backup Tab -->
+      <div id="backupTab" class="tab-content">
+        <h2 style="margin-bottom: 30px;">Backup & Recovery</h2>
+        
+        <div class="backup-section">
+          <div class="backup-card">
+            <h3>💾 Backup (JSON)</h3>
+            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Download local backup</p>
+            <button onclick="backupData()" style="width: 100%;">Download (back_UP)</button>
+          </div>
+
+          <div class="backup-card">
+            <h3>☁️ Cloud Backup</h3>
+            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Download from Online DataBase</p>
+            <button onclick="backupFromCloud()" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Get Cloud Data</button>
+          </div>
+
+          <div class="backup-card">
+            <h3>📊 Export to Excel</h3>
+            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Export data as Excel file</p>
+            <button onclick="exportToExcel()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">Download Excel</button>
+          </div>
+
+          <div class="backup-card">
+            <h3>📥 Restore</h3>
+            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Upload backup to restore</p>
+            <input type="file" id="restoreFile" accept=".json" style="margin-bottom: 10px;">
+            <button onclick="restoreData()" style="width: 100%;">Restore</button>
+          </div>
+
+          <div class="backup-card">
+            <h3>🗑️ Format All</h3>
+            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Delete all records</p>
+            <button onclick="formatAllData()" style="width: 100%; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">Delete All</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supabase Online Sync Tab -->
+      <div id="supabaseTab" class="tab-content">
+        <h2 style="margin-bottom: 30px;">☁️ Online Database Sync (DataBase)</h2>
+        
+        <div id="supabaseAlert"></div>
+
+        <!-- Connection Status -->
+        <div style="padding: 20px; background: rgba(102, 126, 234, 0.1); border: 2px solid #667eea; border-radius: 12px; margin-bottom: 30px;">
+          <h3 style="color: #667eea; margin-bottom: 15px;">📡 Connection Status</h3>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div id="connectionStatus" style="padding: 10px 20px; border-radius: 8px; font-weight: 700;">
+              <!-- Status will be updated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Setup Instructions
+        <div style="background: rgba(239, 184, 16, 0.1); border: 1px solid rgba(239, 184, 16, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;"> -->
+          <!-- <h3 style="color: #efb810; margin-bottom: 15px;">📚 How to Setup Supabase (Free):</h3>
+          <ol style="line-height: 2; padding-left: 20px;">
+            <li>Go to <strong>supabase.com</strong> and create FREE account</li>
+            <li>Create a new project</li>
+            <li>Go to <strong>Settings → API</strong></li>
+            <li>Copy <strong>Project URL</strong> and <strong>anon/public key</strong></li>
+            <li>Paste below and click "Connect"</li>
+            <li>Click "Create Table" to setup database</li>
+            <li>Done! Data will sync automatically ✓</li>
+          </ol> -->
+        <!-- </div> -->
+
+        <!-- Multi-User Warning -->
+        <!-- <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+          <h3 style="color: #ef4444; margin-bottom: 15px;">⚠️ Important - Data Sharing:</h3>
+          <p style="line-height: 1.8; margin-bottom: 10px;">
+            <strong>Current Setup (Simple):</strong><br>
+            • Same Supabase credentials = Same data<br>
+            • All users with same URL+Key see ALL records<br>
+            • Good for: Single business, team sharing data
+          </p>
+          <p style="line-height: 1.8;">
+            <strong>For Private Data (Each User Separate):</strong><br>
+            • Option 1: Each user creates their own Supabase project (separate data)<br>
+            • Option 2: Advanced - Use Supabase Auth (requires login system)<br>
+            • Option 3: Use different table names per user
+          </p>
+        </div> -->
+
+        <!-- Supabase Configuration -->
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
+          <h3 style="margin-bottom: 20px;">🔑 Supabase Credentials</h3>
+          
+          <div class="form-group">
+            <label>DataBase Project URL *</label>
+            <input type="text" id="supabaseUrl" placeholder="https://xxxxx.supabase.co" style="font-family: monospace;">
+          </div>
+
+          <div class="form-group">
+            <label>DataBase Key *</label>
+            <input type="text" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="font-family: monospace;">
+          </div>
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button onclick="connectSupabase()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+              ☁️ Connect to DataBase
+            </button>
+            <button onclick="disconnectSupabase()" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+              🔌 Disconnect
+            </button>
+            <button onclick="createSupabaseTable()" id="createTableBtn" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); display: none;">
+              📊 Create Table
+            </button>
+          </div>
+        </div>
+
+        <!-- Sync Options -->
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 30px;" id="syncOptions" style="display: none;">
+          <h3 style="margin-bottom: 20px;">🔄 Sync Options</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+            <button onclick="uploadToSupabase()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); width: 100%;">
+              ⬆️ Upload All to Cloud
+            </button>
+            <button onclick="downloadFromSupabase()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 100%;">
+              ⬇️ Download from Cloud
+            </button>
+            <button onclick="syncSupabase()" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); width: 100%;">
+              🔄 Two-Way Sync
+            </button>
+          </div>
+
+          <!-- <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 15px;">
+            <h4 style="color: #10b981; margin-bottom: 10px;">✓ Auto-Sync Enabled</h4>
+            <p style="font-size: 14px; line-height: 1.6;">
+              When connected, all new entries are automatically saved to cloud database.
+              Your data is backed up online in real-time!
+            </p>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- Profile Tab -->
+      <div id="profileTab" class="tab-content">
+        <h2 style="margin-bottom: 30px;">👤 User Profile</h2>
+        
+        <div style="max-width: 600px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 40px;">
+            <div style="position: relative; display: inline-block;">
+              <img id="profilePicPreview" src="" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 5px solid #667eea; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+              <label for="profilePicInput" style="position: absolute; bottom: 10px; right: 10px; background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; border: 3px solid #1a1a2e;">
+                📷
+              </label>
+              <input type="file" id="profilePicInput" accept="image/*" style="display: none;" onchange="handleProfilePicture(event)">
+            </div>
+            <p style="margin-top: 15px; font-size: 14px; color: rgba(255,255,255,0.6);">Click camera icon to change picture</p>
+          </div>
+
+          <div class="form-group">
+            <label>👤 Your Name *</label>
+            <input type="text" id="profileName" placeholder="Enter your name" style="font-size: 18px; text-align: center; font-weight: 600;">
+          </div>
+
+          <div class="form-group">
+            <label>💼 Business Name (Optional)</label>
+            <input type="text" id="businessName" placeholder="Enter business name" style="font-size: 16px;">
+          </div>
+
+          <div class="form-group">
+            <label>📧 Email (Optional)</label>
+            <input type="email" id="profileEmail" placeholder="your@email.com">
+          </div>
+
+          <div class="form-group">
+            <label>📱 Phone (Optional)</label>
+            <input type="tel" id="profilePhone" placeholder="+92 300 1234567">
+          </div>
+
+          <button onclick="saveProfile()" style="width: 100%; font-size: 18px; padding: 18px;">
+            💾 Save Profile
+          </button>
+
+          <button onclick="clearProfile()" style="width: 100%; margin-top: 15px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); font-size: 16px;">
+            🗑️ Clear Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    // Supabase Configuration
+    let supabaseClient = null;
+    let isOnlineMode = false;
+    const SUPABASE_URL = localStorage.getItem('supabase_url') || '';
+    const SUPABASE_KEY = localStorage.getItem('supabase_key') || '';
+
+    // Initialize Supabase if credentials exist
+    if (SUPABASE_URL && SUPABASE_KEY) {
+      try {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        isOnlineMode = true;
+      } catch (error) {
+        console.error('Supabase init error:', error);
+      }
+    }
+    let records = [];
+    let currentReportData = null;
+    let currentReportTitle = '';
+    let html5QrCode = null;
+    let isScanning = false;
+    let isReallyOnline = false;
+    let offlineSyncPending = false;
+    let defaultProfilePic = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='75' cy='75' r='75' fill='url(%23grad)'/%3E%3Ctext x='75' y='95' font-size='60' fill='white' text-anchor='middle' font-family='Arial'%3E👤%3C/text%3E%3C/svg%3E";
+
+    // Check real internet connection (not just Supabase)
+    function checkOnlineStatus() {
+      isReallyOnline = navigator.onLine;
+      updateStatusBar();
+    }
+
+    function updateStatusBar() {
+      const statusBar = document.querySelector('.status-bar');
+      
+      if (isReallyOnline && isOnlineMode && supabaseClient) {
+        // Online + Connected to Supabase
+        statusBar.textContent = '✓ Online Mode - Cloud Sync Active';
+        statusBar.style.background = '#10b981';
+      } else if (isReallyOnline && !isOnlineMode) {
+        // Online but not connected to Supabase
+        statusBar.textContent = '⚠ Online - Not Connected to Cloud (Setup Required)';
+        statusBar.style.background = '#f59e0b';
+      } else {
+        // Offline
+        statusBar.textContent = '⚠ Offline Mode - Local Storage Only';
+        statusBar.style.background = '#ef4444';
+      }
+    }
+
+    // Listen for online/offline events
+    window.addEventListener('online', checkOnlineStatus);
+    window.addEventListener('offline', checkOnlineStatus);
+
+    function init() {
+      loadRecords();
+      loadProfile();
+      document.getElementById('reportDate').valueAsDate = new Date();
+      
+      // Check online status
+      checkOnlineStatus();
+      
+      // Load Supabase credentials if exist
+      const savedUrl = localStorage.getItem('supabase_url');
+      const savedKey = localStorage.getItem('supabase_key');
+      if (savedUrl && savedKey) {
+        document.getElementById('supabaseUrl').value = savedUrl;
+        document.getElementById('supabaseKey').value = savedKey;
+      }
+      updateConnectionStatus();
+      
+      // Hide welcome after 2 seconds
+      setTimeout(() => {
+        document.getElementById('welcomeScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+        renderRecords();
+        renderRecentEntries();
+        renderBarcodeRecentEntries();
+      }, 2000);
+      
+      // Auto backup every 24 hours
+      setInterval(autoBackup, 86400000);
+      
+      // Check online status every 30 seconds
+      setInterval(checkOnlineStatus, 30000);
+    }
+
+    function loadRecords() {
+      const stored = localStorage.getItem('billing_records');
+      records = stored ? JSON.parse(stored) : [];
+    }
+
+    function saveRecords() {
+      localStorage.setItem('billing_records', JSON.stringify(records));
+    }
+
+    function handleAddRecord(event) {
+      event.preventDefault();
+      const refNumber = document.getElementById('refNumber').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const now = new Date();
+      const maxSerialNo = records.length > 0 ? Math.max(...records.map(r => r.serialNo)) : 0;
+      const serialNo = maxSerialNo + 1;
+
+      const newRecord = {
+        id: Date.now(),
+        serialNo: serialNo,
+        refNumber: refNumber,
+        amount: amount,
+        date: now.toISOString().split('T')[0],
+        time: now.toTimeString().split(' ')[0],
+        entryType: 'manual'
+      };
+
+      records.push(newRecord);
+      saveRecords();
+      
+      // Auto-save to cloud
+      autoSaveToSupabase(newRecord);
+      
+      document.getElementById('refNumber').value = '';
+      document.getElementById('amount').value = '';
+      showAlert('entryAlert', `Record added! S.No: ${serialNo}${isOnlineMode ? ' ☁️' : ''}`, 'success');
+      setTimeout(() => document.getElementById('entryAlert').innerHTML = '', 3000);
+      
+      // Update recent entries display
+      renderRecentEntries();
+    }
+
+    function handleBarcodeAddRecord(event) {
+      event.preventDefault();
+      const refNumber = document.getElementById('barcodeRefNumber').value.trim();
+      const amount = parseFloat(document.getElementById('barcodeAmount').value);
+      
+      if (!refNumber || !amount) {
+        showAlert('barcodeAlert', 'Please scan barcode and enter amount!', 'error');
+        return;
+      }
+
+      const now = new Date();
+      const maxSerialNo = records.length > 0 ? Math.max(...records.map(r => r.serialNo)) : 0;
+      const serialNo = maxSerialNo + 1;
+
+      const newRecord = {
+        id: Date.now(),
+        serialNo: serialNo,
+        refNumber: refNumber,
+        amount: amount,
+        date: now.toISOString().split('T')[0],
+        time: now.toTimeString().split(' ')[0],
+        entryType: 'camera-barcode'
+      };
+
+      records.push(newRecord);
+      saveRecords();
+      
+      // Auto-save to cloud
+      autoSaveToSupabase(newRecord);
+      
+      // Clear form but DON'T stop camera
+      document.getElementById('barcodeRefNumber').value = '';
+      document.getElementById('barcodeAmount').value = '';
+      
+      // Show success notification
+      showQuickNotification(`✓ Saved! S.No: ${serialNo} | Rs ${amount.toLocaleString('en-PK')}${isOnlineMode ? ' ☁️' : ''}`);
+      playBeep();
+      
+      // Update displays
+      renderBarcodeRecentEntries();
+      renderRecentEntries();
+      updateScanStats(refNumber);
+      
+      // Camera stays ON - ready for next scan!
+      // User can continue scanning immediately
+    }
+
+    function playBeep() {
+      // Simple beep sound
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = 800;
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    }
+
+    function renderBarcodeRecentEntries() {
+      const container = document.getElementById('barcodeRecentEntries');
+      
+      if (records.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p style="font-size: 14px;">No entries yet</p></div>';
+        return;
+      }
+
+      // Get last 10 entries (most recent first)
+      const recentRecords = [...records]
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 10);
+
+      let html = `
+        <table style="font-size: 14px;">
+          <thead>
+            <tr>
+              <th style="width: 10%;">S.No</th>
+              <th style="width: 35%;">Reference (Barcode)</th>
+              <th style="width: 25%;">Amount (Rs)</th>
+              <th style="width: 20%;">Date/Time</th>
+              <th style="width: 10%;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      recentRecords.forEach(record => {
+        const isCameraScanned = record.entryType === 'camera-barcode';
+        html += `
+          <tr id="barcode-recent-row-${record.id}" style="background: ${isCameraScanned ? 'rgba(16, 185, 129, 0.08)' : 'transparent'};">
+            <td style="text-align: center; font-weight: 700;">${record.serialNo}</td>
+            <td><strong style="color: ${isCameraScanned ? '#10b981' : 'white'};">${isCameraScanned ? '📷 ' : ''}${record.refNumber}</strong></td>
+            <td style="color: #10b981; font-weight: 600; text-align: right;">Rs ${record.amount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</td>
+            <td style="text-align: center; font-size: 12px;">${record.date}<br>${record.time}</td>
+            <td style="text-align: center;">
+              <button class="action-btn delete-btn" onclick="deleteBarcodeRecentRecord(${record.id})" style="padding: 6px 12px; font-size: 12px;">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function deleteBarcodeRecentRecord(id) {
+      if (!confirm('Delete? S.No will be preserved.')) return;
+      records = records.filter(r => r.id !== id);
+      saveRecords();
+      renderBarcodeRecentEntries();
+      renderRecentEntries();
+      alert('Deleted!');
+    }
+
+    // Auto-focus on barcode field when tab is opened
+    function focusBarcodeField() {
+      setTimeout(() => {
+        const field = document.getElementById('barcodeAmount');
+        if (field) {
+          field.focus();
+        }
+      }, 100);
+    }
+
+    // Camera Barcode Scanner Functions
+    function startBarcodeScanner() {
+      if (isScanning) return;
+      
+      const reader = document.getElementById('barcode-reader');
+      reader.style.display = 'block';
+      
+      document.getElementById('startScanBtn').style.display = 'none';
+      document.getElementById('stopScanBtn').style.display = 'inline-block';
+      document.getElementById('scanStatus').style.display = 'inline-block';
+      document.getElementById('scanStats').style.display = 'block';
+      
+      html5QrCode = new Html5Qrcode("barcode-reader");
+      
+      const config = {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+        aspectRatio: 1.0
+      };
+      
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        onScanSuccess,
+        onScanError
+      ).then(() => {
+        isScanning = true;
+        showAlert('barcodeAlert', '📷 Camera started! Continuous scanning mode activated. Camera will stay on.', 'success');
+        setTimeout(() => {
+          document.getElementById('barcodeAlert').innerHTML = '';
+        }, 3000);
+      }).catch(err => {
+        showAlert('barcodeAlert', `❌ Camera error: ${err}. Please allow camera permission.`, 'error');
+        stopBarcodeScanner();
+      });
+    }
+
+    function stopBarcodeScanner() {
+      if (html5QrCode && isScanning) {
+        html5QrCode.stop().then(() => {
+          isScanning = false;
+          document.getElementById('barcode-reader').style.display = 'none';
+          document.getElementById('startScanBtn').style.display = 'inline-block';
+          document.getElementById('stopScanBtn').style.display = 'none';
+          document.getElementById('scanStatus').style.display = 'none';
+          document.getElementById('scanStats').style.display = 'none';
+          html5QrCode.clear();
+          showAlert('barcodeAlert', '🛑 Camera stopped.', 'success');
+          setTimeout(() => {
+            document.getElementById('barcodeAlert').innerHTML = '';
+          }, 2000);
+        }).catch(err => {
+          console.error('Stop error:', err);
+        });
+      }
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+      // Don't stop camera - keep scanning!
+      document.getElementById('barcodeRefNumber').value = decodedText;
+      
+      // Play success sound
+      playBeep();
+      
+      // Update stats
+      updateScanStats(decodedText);
+      
+      // Focus on amount field
+      document.getElementById('barcodeAmount').focus();
+      
+      // Flash green border
+      const reader = document.getElementById('barcode-reader');
+      reader.style.border = '5px solid #10b981';
+      setTimeout(() => {
+        reader.style.border = '3px solid #10b981';
+      }, 300);
+      
+      // Show quick notification (non-blocking)
+      showQuickNotification(`✓ Scanned: ${decodedText}`);
+    }
+
+    function onScanError(errorMessage) {
+      // Ignore scan errors (happens while searching for barcode)
+    }
+
+    function updateScanStats(barcode) {
+      const today = new Date().toISOString().split('T')[0];
+      const todayScans = records.filter(r => r.date === today && r.entryType === 'camera-barcode').length;
+      
+      document.getElementById('scansToday').textContent = todayScans + 1;
+      document.getElementById('lastScanned').textContent = barcode.substring(0, 15) + (barcode.length > 15 ? '...' : '');
+    }
+
+    function showQuickNotification(message) {
+      // Create floating notification
+      const notif = document.createElement('div');
+      notif.textContent = message;
+      notif.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        z-index: 10000;
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+        animation: slideIn 0.3s ease-out;
+      `;
+      
+      document.body.appendChild(notif);
+      
+      setTimeout(() => {
+        notif.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => notif.remove(), 300);
+      }, 2000);
+    }
+
+    function renderRecentEntries() {
+      const container = document.getElementById('recentEntries');
+      
+      if (records.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p style="font-size: 14px;">No entries yet</p></div>';
+        return;
+      }
+
+      // Get last 10 entries (most recent first)
+      const recentRecords = [...records]
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 10);
+
+      let html = `
+        <table style="font-size: 14px;">
+          <thead>
+            <tr>
+              <th style="width: 10%;">S.No</th>
+              <th style="width: 30%;">Reference</th>
+              <th style="width: 25%;">Amount (Rs)</th>
+              <th style="width: 20%;">Date/Time</th>
+              <th style="width: 15%;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      recentRecords.forEach(record => {
+        html += `
+          <tr id="recent-row-${record.id}">
+            <td style="text-align: center; font-weight: 700;">${record.serialNo}</td>
+            <td><strong>${record.refNumber}</strong></td>
+            <td style="color: #10b981; font-weight: 600; text-align: right;">Rs ${record.amount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</td>
+            <td style="text-align: center; font-size: 12px;">${record.date}<br>${record.time}</td>
+            <td style="text-align: center;">
+              <button class="action-btn edit-btn" onclick="editRecentRecord(${record.id})" style="padding: 6px 12px; font-size: 12px;">✏️</button>
+              <button class="action-btn delete-btn" onclick="deleteRecentRecord(${record.id})" style="padding: 6px 12px; font-size: 12px;">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function editRecentRecord(id) {
+      const record = records.find(r => r.id === id);
+      if (!record) return;
+
+      const row = document.getElementById(`recent-row-${id}`);
+      row.innerHTML = `
+        <td style="text-align: center; font-weight: 700;">${record.serialNo}</td>
+        <td><input type="text" id="recent-edit-ref-${id}" value="${record.refNumber}" style="width: 100%; padding: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: white; font-size: 13px;"></td>
+        <td><input type="number" step="0.01" id="recent-edit-amt-${id}" value="${record.amount}" style="width: 100%; padding: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: white; font-size: 13px;"></td>
+        <td style="text-align: center; font-size: 12px;">${record.date}<br>${record.time}</td>
+        <td style="text-align: center;">
+          <button class="action-btn save-btn" onclick="saveRecentEdit(${id})" style="padding: 6px 12px; font-size: 12px;">💾</button>
+          <button class="action-btn cancel-btn" onclick="cancelRecentEdit()" style="padding: 6px 12px; font-size: 12px;">❌</button>
+        </td>
+      `;
+    }
+
+    function saveRecentEdit(id) {
+      const newRef = document.getElementById(`recent-edit-ref-${id}`).value;
+      const newAmt = parseFloat(document.getElementById(`recent-edit-amt-${id}`).value);
+
+      if (!newRef || !newAmt) {
+        alert('Fill all fields');
+        return;
+      }
+
+      const recordIndex = records.findIndex(r => r.id === id);
+      if (recordIndex >= 0) {
+        records[recordIndex].refNumber = newRef;
+        records[recordIndex].amount = newAmt;
+        saveRecords();
+        renderRecentEntries();
+        alert('Updated!');
+      }
+    }
+
+    function cancelRecentEdit() {
+      renderRecentEntries();
+    }
+
+    function deleteRecentRecord(id) {
+      if (!confirm('Delete? S.No will be preserved.')) return;
+      records = records.filter(r => r.id !== id);
+      saveRecords();
+      renderRecentEntries();
+      alert('Deleted!');
+    }
+
+    function filterRecords() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      renderRecords(searchTerm);
+    }
+
+    function renderRecords(searchTerm = '') {
+      const container = document.getElementById('recordsTable');
+      let filteredRecords = records;
+
+      if (searchTerm) {
+        filteredRecords = records.filter(r => 
+          r.refNumber.toLowerCase().includes(searchTerm) ||
+          r.serialNo.toString().includes(searchTerm)
+        );
+      }
+
+      if (filteredRecords.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>No records found</p></div>';
+        return;
+      }
+
+      const totalAmount = filteredRecords.reduce((sum, r) => sum + r.amount, 0);
+      
+      let html = `
+        <div class="summary">
+          <div class="summary-item">
+            <div class="summary-label">Total Records</div>
+            <div class="summary-value">${filteredRecords.length}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Total Amount</div>
+            <div class="summary-value">Rs ${totalAmount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Reference No.</th>
+              <th>Amount (Rs)</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      filteredRecords.sort((a, b) => a.serialNo - b.serialNo).forEach(record => {
+        html += `
+          <tr id="row-${record.id}">
+            <td style="text-align: center; font-weight: 700;">${record.serialNo}</td>
+            <td><strong>${record.refNumber}</strong></td>
+            <td style="color: #10b981; font-weight: 600; text-align: right;">Rs ${record.amount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</td>
+            <td style="text-align: center;">${record.date}</td>
+            <td style="text-align: center;">
+              <button class="action-btn edit-btn" onclick="editRecord(${record.id})">✏️ Edit</button>
+              <button class="action-btn delete-btn" onclick="deleteRecord(${record.id})">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function editRecord(id) {
+      const record = records.find(r => r.id === id);
+      if (!record) return;
+
+      const row = document.getElementById(`row-${id}`);
+      row.innerHTML = `
+        <td style="text-align: center; font-weight: 700;">${record.serialNo}</td>
+        <td><input type="text" id="edit-ref-${id}" value="${record.refNumber}" style="width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: white;"></td>
+        <td><input type="number" step="0.01" id="edit-amt-${id}" value="${record.amount}" style="width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; color: white;"></td>
+        <td style="text-align: center;">${record.date}</td>
+        <td style="text-align: center;">
+          <button class="action-btn save-btn" onclick="saveEdit(${id})">💾</button>
+          <button class="action-btn cancel-btn" onclick="cancelEdit()">❌</button>
+        </td>
+      `;
+    }
+
+    function saveEdit(id) {
+      const newRef = document.getElementById(`edit-ref-${id}`).value;
+      const newAmt = parseFloat(document.getElementById(`edit-amt-${id}`).value);
+
+      if (!newRef || !newAmt) {
+        alert('Fill all fields');
+        return;
+      }
+
+      const recordIndex = records.findIndex(r => r.id === id);
+      if (recordIndex >= 0) {
+        records[recordIndex].refNumber = newRef;
+        records[recordIndex].amount = newAmt;
+        saveRecords();
+        renderRecords();
+        alert('Updated!');
+      }
+    }
+
+    function cancelEdit() {
+      renderRecords();
+    }
+
+    function deleteRecord(id) {
+      if (!confirm('Delete? S.No will be preserved.')) return;
+      records = records.filter(r => r.id !== id);
+      saveRecords();
+      renderRecords();
+    }
+
+    function generateReport() {
+      const reportType = document.getElementById('reportType').value;
+      const selectedDate = new Date(document.getElementById('reportDate').value);
+      let filteredRecords = [];
+      let title = '';
+
+      if (reportType === 'daily') {
+        const dateStr = selectedDate.toISOString().split('T')[0];
+        filteredRecords = records.filter(r => r.date === dateStr);
+        title = `Daily Report - ${selectedDate.toLocaleDateString('en-PK')}`;
+      } else if (reportType === 'weekly') {
+        const startOfWeek = new Date(selectedDate);
+        startOfWeek.setDate(selectedDate.getDate() - selectedDate.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        filteredRecords = records.filter(r => {
+          const recordDate = new Date(r.date);
+          return recordDate >= startOfWeek && recordDate <= endOfWeek;
+        });
+        title = `Weekly Report - ${startOfWeek.toLocaleDateString('en-PK')} to ${endOfWeek.toLocaleDateString('en-PK')}`;
+      } else if (reportType === 'monthly') {
+        const month = selectedDate.getMonth();
+        const year = selectedDate.getFullYear();
+        filteredRecords = records.filter(r => {
+          const recordDate = new Date(r.date);
+          return recordDate.getMonth() === month && recordDate.getFullYear() === year;
+        });
+        title = `Monthly Report - ${selectedDate.toLocaleDateString('en-PK', { month: 'long', year: 'numeric' })}`;
+      } else if (reportType === 'yearly') {
+        const year = selectedDate.getFullYear();
+        filteredRecords = records.filter(r => {
+          const recordDate = new Date(r.date);
+          return recordDate.getFullYear() === year;
+        });
+        title = `Yearly Report - ${year}`;
+      }
+
+      currentReportData = filteredRecords;
+      currentReportTitle = title;
+      displayReport(filteredRecords, title);
+    }
+
+    function displayReport(data, title) {
+      const container = document.getElementById('reportPreview');
+      
+      if (data.length === 0) {
+        container.innerHTML = '<div class="alert" style="background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #fca5a5;">No records found</div>';
+        return;
+      }
+
+      data.sort((a, b) => a.serialNo - b.serialNo);
+      const totalAmount = data.reduce((sum, r) => sum + r.amount, 0);
+
+      let html = `
+        <div class="pdf-buttons">
+          <button class="download-btn" onclick="downloadPDF()">💾 PDF</button>
+          <button style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="downloadReportExcel()">📊 Excel</button>
+          <button style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);" onclick="window.print()">🖨️ Print</button>
+        </div>
+        <div style="background: white; color: black; padding: 40px; border-radius: 12px;">
+          <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #667eea; padding-bottom: 20px;">
+            <h1 style="margin: 0; font-size: 28px; color: #667eea;">P/O Swari Report</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px; color: #333; font-weight: 600;">${title}</p>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; color: black;">
+            <thead>
+              <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <th style="padding: 12px; border: 1px solid #ddd;">S.No</th>
+                <th style="padding: 12px; border: 1px solid #ddd;">Reference</th>
+                <th style="padding: 12px; border: 1px solid #ddd; text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      data.forEach((record, idx) => {
+        html += `
+          <tr style="background: ${idx % 2 === 0 ? '#f9f9f9' : 'white'};">
+            <td style="padding: 10px; border: 1px solid #ddd; text-align: center; font-weight: 700;">${record.serialNo}</td>
+            <td style="padding: 10px; border: 1px solid #ddd; font-weight: 600;">${record.refNumber}</td>
+            <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-weight: 700; color: #10b981;">Rs ${record.amount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+            </tbody>
+          </table>
+          <div style="margin-top: 30px; padding: 20px; background: white; border: 2px solid #667eea; border-radius: 8px;">
+            <h3 style="color: #667eea; margin-bottom: 10px;">Summary</h3>
+            <p style="margin: 5px 0;"><strong>Total Records:</strong> ${data.length}</p>
+            <p style="margin: 5px 0;"><strong>Total Amount:</strong> Rs ${totalAmount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</p>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function downloadPDF() {
+      if (!currentReportData || currentReportData.length === 0) {
+        alert('No data!');
+        return;
+      }
+
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const data = currentReportData.sort((a, b) => a.serialNo - b.serialNo);
+        const totalAmount = data.reduce((sum, r) => sum + r.amount, 0);
+        const RECORDS_PER_PAGE = 50; // 25 left + 25 right
+        const totalPages = Math.ceil(data.length / RECORDS_PER_PAGE);
+        
+        for (let pageNum = 0; pageNum < totalPages; pageNum++) {
+          if (pageNum > 0) doc.addPage();
+          
+          // Header
+          doc.setFontSize(22);
+          doc.setTextColor(102, 126, 234);
+          doc.text('P/O Swari Report', 105, 15, { align: 'center' });
+          
+          doc.setFontSize(12);
+          doc.setTextColor(60, 60, 60);
+          doc.text(currentReportTitle, 105, 23, { align: 'center' });
+          
+          if (totalPages > 1) {
+            doc.setFontSize(10);
+            doc.text(`Page ${pageNum + 1} of ${totalPages}`, 105, 30, { align: 'center' });
+          }
+          
+          const startIdx = pageNum * RECORDS_PER_PAGE;
+          const endIdx = Math.min(startIdx + RECORDS_PER_PAGE, data.length);
+          const pageData = data.slice(startIdx, endIdx);
+          const leftData = pageData.slice(0, 25);
+          const rightData = pageData.slice(25, 50);
+          
+          let yPos = 37;
+          
+          // Draw columns and get their heights
+          const leftHeight = drawColumnLarge(doc, leftData, 10, yPos);
+          let rightHeight = 0;
+          if (rightData.length > 0) {
+            rightHeight = drawColumnLarge(doc, rightData, 110, yPos);
+          }
+          
+          // Page Total (after columns on each page)
+          const maxColumnHeight = Math.max(leftHeight, rightHeight);
+          const pageTotalY = yPos + maxColumnHeight + 5;
+          
+          // Calculate page total
+          const pageTotal = pageData.reduce((sum, r) => sum + r.amount, 0);
+          
+          if (pageTotalY + 25 < 270) {
+            drawPageTotal(doc, pageTotalY, pageData.length, pageTotal, pageNum + 1);
+          }
+        }
+        
+        // Grand Summary on new page
+        doc.addPage();
+        drawFinalSummary(doc, 20, data.length, totalAmount, totalPages);
+        
+        // Footer on all pages
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          doc.setPage(i);
+          doc.setFontSize(8);
+          doc.setTextColor(150, 150, 150);
+          doc.text(`Generated: ${new Date().toLocaleDateString('en-PK')}`, 105, 287, { align: 'center' });
+        }
+        
+        doc.save(`Report_${new Date().toISOString().split('T')[0]}.pdf`);
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    function drawColumnLarge(doc, data, x, y) {
+      const cellHeight = 7; // Larger cell height
+      const totalWidth = 90;
+      
+      // Header
+      doc.setFillColor(102, 126, 234);
+      doc.rect(x, y, totalWidth, cellHeight, 'F');
+      doc.setFontSize(10); // Larger font
+      doc.setTextColor(255, 255, 255);
+      doc.setFont(undefined, 'bold');
+      doc.text('S.No', x + 7, y + 4.5, { align: 'center' });
+      doc.text('Reference', x + 32, y + 4.5);
+      doc.text('Amount', x + 82, y + 4.5, { align: 'right' });
+      
+      // Data rows
+      let currentY = y + cellHeight;
+      data.forEach((record, idx) => {
+        if (idx % 2 === 0) {
+          doc.setFillColor(249, 249, 249);
+          doc.rect(x, currentY, totalWidth, cellHeight, 'F');
+        }
+        doc.setDrawColor(220, 220, 220);
+        doc.setLineWidth(0.1);
+        doc.rect(x, currentY, totalWidth, cellHeight);
+        doc.setFontSize(9); // Larger font
+        doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'bold');
+        doc.text(record.serialNo.toString(), x + 7, currentY + 4.5, { align: 'center' });
+        doc.setFont(undefined, 'normal');
+        doc.text(record.refNumber.substring(0, 16), x + 18, currentY + 4.5);
+        doc.setFont(undefined, 'bold');
+        doc.text(`Rs ${record.amount.toLocaleString('en-PK', {minimumFractionDigits: 2})}`, x + 85, currentY + 4.5, { align: 'right' });
+        currentY += cellHeight;
+      });
+      
+      return (data.length + 1) * cellHeight;
+    }
+
+    function drawPageTotal(doc, y, pageRecords, pageAmount, pageNumber) {
+      // Light blue background
+      doc.setFillColor(220, 235, 255);
+      doc.rect(10, y, 190, 20, 'F');
+      
+      // Border
+      doc.setDrawColor(102, 126, 234);
+      doc.setLineWidth(0.5);
+      doc.rect(10, y, 190, 20);
+      
+      // Title
+      doc.setFontSize(11);
+      doc.setTextColor(102, 126, 234);
+      doc.setFont(undefined, 'bold');
+      doc.text(`Page ${pageNumber} Total`, 15, y + 7);
+      
+      // Data
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Records: ${pageRecords}`, 15, y + 14);
+      doc.text(`Amount: Rs ${pageAmount.toLocaleString('en-PK', {minimumFractionDigits: 2})}`, 100, y + 14);
+    }
+
+    function drawFinalSummary(doc, y, totalRecords, totalAmount, totalPages) {
+      // Header
+      doc.setFontSize(24);
+      doc.setTextColor(102, 126, 234);
+      doc.text('Final Summary', 105, y, { align: 'center' });
+      
+      // Main box
+      const boxY = y + 15;
+      doc.setFillColor(255, 255, 255);
+      doc.rect(20, boxY, 170, 60, 'F');
+      
+      // Border
+      doc.setDrawColor(102, 126, 234);
+      doc.setLineWidth(2);
+      doc.rect(20, boxY, 170, 60);
+      
+      // Content
+      doc.setFontSize(14);
+      doc.setTextColor(0, 0, 0);
+      doc.setFont(undefined, 'bold');
+      
+      doc.text('Total Pages:', 30, boxY + 15);
+      doc.setFont(undefined, 'normal');
+      doc.text(totalPages.toString(), 150, boxY + 15, { align: 'right' });
+      
+      doc.setFont(undefined, 'bold');
+      doc.text('Total Records:', 30, boxY + 30);
+      doc.setFont(undefined, 'normal');
+      doc.text(totalRecords.toString(), 150, boxY + 30, { align: 'right' });
+      
+      doc.setFont(undefined, 'bold');
+      doc.text('Total Amount:', 30, boxY + 45);
+      doc.setTextColor(16, 185, 129);
+      doc.setFont(undefined, 'bold');
+      doc.setFontSize(16);
+      doc.text(`Rs ${totalAmount.toLocaleString('en-PK', {minimumFractionDigits: 2})}`, 150, boxY + 45, { align: 'right' });
+      
+      // Additional info
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.setFont(undefined, 'normal');
+      doc.text(currentReportTitle, 105, boxY + 70, { align: 'center' });
+    }
+
+
+    function backupData() {
+      if (records.length === 0) {
+        alert('No data!');
+        return;
+      }
+      const dataStr = JSON.stringify(records, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `backup_${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      alert('Backup downloaded!');
+    }
+
+    async function backupFromCloud() {
+      if (!supabaseClient) {
+        alert('Please connect to Supabase first! Go to Online Sync tab.');
+        return;
+      }
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('billing_records')
+          .select('*')
+          .order('serialNo', { ascending: true });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          alert('No data found in cloud!');
+          return;
+        }
+
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `cloud_backup_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+        alert(`Cloud backup downloaded! ${data.length} records.`);
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    function autoBackup() {
+      if (records.length > 0) {
+        backupData();
+      }
+    }
+
+    function exportToExcel() {
+      if (records.length === 0) {
+        alert('No data!');
+        return;
+      }
+
+      const data = records.sort((a, b) => a.serialNo - b.serialNo).map(r => ({
+        'Serial No': r.serialNo,
+        'Reference Number': r.refNumber,
+        'Amount (Rs)': r.amount,
+        'Date': r.date,
+        'Time': r.time
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Records');
+      XLSX.writeFile(wb, `Records_${new Date().toISOString().split('T')[0]}.xlsx`);
+      alert('Excel downloaded!');
+    }
+
+    function downloadReportExcel() {
+      if (!currentReportData || currentReportData.length === 0) {
+        alert('No data!');
+        return;
+      }
+
+      const data = currentReportData.sort((a, b) => a.serialNo - b.serialNo).map(r => ({
+        'S.No': r.serialNo,
+        'Reference': r.refNumber,
+        'Amount (Rs)': r.amount
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Report');
+      XLSX.writeFile(wb, `Report_${new Date().toISOString().split('T')[0]}.xlsx`);
+      alert('Excel downloaded!');
+    }
+
+    function restoreData() {
+      const file = document.getElementById('restoreFile').files[0];
+      if (!file) {
+        alert('Select file!');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const restoredData = JSON.parse(e.target.result);
+          if (!Array.isArray(restoredData)) {
+            alert('Invalid file!');
+            return;
+          }
+          records = restoredData;
+          saveRecords();
+          renderRecords();
+          alert(`Restored ${records.length} records!`);
+        } catch (error) {
+          alert('Error!');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function formatAllData() {
+      if (!confirm('DELETE ALL? Cannot undo!')) return;
+      if (!confirm('SURE?')) return;
+      
+      records = [];
+      saveRecords();
+      renderRecords();
+      alert('Deleted!');
+    }
+
+    function switchTab(tabName) {
+      // Stop camera if leaving barcode tab
+      if (isScanning) {
+        stopBarcodeScanner();
+      }
+      
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabName + 'Tab').classList.add('active');
+      event.target.classList.add('active');
+      
+      if (tabName === 'view') {
+        renderRecords();
+      } else if (tabName === 'barcode') {
+        renderBarcodeRecentEntries();
+      }
+    }
+
+    function showAlert(elementId, message, type) {
+      const element = document.getElementById(elementId);
+      element.innerHTML = `<div class="alert alert-${type}">${type === 'success' ? '✓' : '⚠'} ${message}</div>`;
+    }
+
+    // ============================================================================
+    // SUPABASE FUNCTIONS
+    // ============================================================================
+
+    function updateConnectionStatus() {
+      const statusDiv = document.getElementById('connectionStatus');
+      if (isOnlineMode && supabaseClient) {
+        statusDiv.innerHTML = '✓ Connected to Cloud';
+        statusDiv.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        statusDiv.style.color = 'white';
+        document.getElementById('syncOptions').style.display = 'block';
+        document.getElementById('createTableBtn').style.display = 'inline-block';
+      } else {
+        statusDiv.innerHTML = '⚠ Not Connected (Local Only)';
+        statusDiv.style.background = 'rgba(239, 68, 68, 0.2)';
+        statusDiv.style.color = '#fca5a5';
+        document.getElementById('syncOptions').style.display = 'none';
+        document.getElementById('createTableBtn').style.display = 'none';
+      }
+      updateStatusBar();
+    }
+
+    async function connectSupabase() {
+      const url = document.getElementById('supabaseUrl').value.trim();
+      const key = document.getElementById('supabaseKey').value.trim();
+
+      if (!url || !key) {
+        showAlert('supabaseAlert', 'Please enter both URL and Key!', 'error');
+        return;
+      }
+
+      try {
+        supabaseClient = supabase.createClient(url, key);
+        
+        // Test connection
+        const { data, error } = await supabaseClient.from('billing_records').select('count', { count: 'exact', head: true });
+        
+        if (error && error.code !== 'PGRST116') {
+          throw new Error('Connection failed. Please check your credentials.');
+        }
+
+        // Save credentials
+        localStorage.setItem('supabase_url', url);
+        localStorage.setItem('supabase_key', key);
+        isOnlineMode = true;
+        
+        updateConnectionStatus();
+        showAlert('supabaseAlert', '✓ Connected successfully! Click "Create Table" if this is first time.', 'success');
+        
+        // Check for offline data and auto-sync
+        checkAndSyncOfflineData();
+      } catch (error) {
+        showAlert('supabaseAlert', `❌ Connection failed: ${error.message}`, 'error');
+        supabaseClient = null;
+        isOnlineMode = false;
+        updateConnectionStatus();
+      }
+    }
+
+    function disconnectSupabase() {
+      localStorage.removeItem('supabase_url');
+      localStorage.removeItem('supabase_key');
+      supabaseClient = null;
+      isOnlineMode = false;
+      document.getElementById('supabaseUrl').value = '';
+      document.getElementById('supabaseKey').value = '';
+      updateConnectionStatus();
+      showAlert('supabaseAlert', '🔌 Disconnected from cloud', 'success');
+    }
+
+    async function createSupabaseTable() {
+      if (!supabaseClient) {
+        showAlert('supabaseAlert', 'Please connect first!', 'error');
+        return;
+      }
+
+      showAlert('supabaseAlert', '⏳ Creating table... Please wait...', 'success');
+
+      try {
+        // Try to insert a test record to check if table exists
+        const { error } = await supabaseClient
+          .from('billing_records')
+          .select('id')
+          .limit(1);
+
+        if (error) {
+          showAlert('supabaseAlert', `
+            ⚠️ Please create table manually in Supabase SQL Editor:
+            <br><br>
+            <code style="background: rgba(0,0,0,0.3); padding: 10px; display: block; border-radius: 8px; font-size: 12px; overflow-x: auto;">
+CREATE TABLE billing_records (
+  id BIGINT PRIMARY KEY,
+  serialNo INTEGER NOT NULL,
+  refNumber TEXT NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
+  entryType TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Enable Row Level Security
+ALTER TABLE billing_records ENABLE ROW LEVEL SECURITY;
+
+-- Allow all operations for now (adjust for production)
+CREATE POLICY "Allow all operations" ON billing_records FOR ALL USING (true);
+            </code>
+          `, 'error');
+        } else {
+          showAlert('supabaseAlert', '✓ Table already exists or created! You can start syncing.', 'success');
+        }
+      } catch (error) {
+        showAlert('supabaseAlert', `❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    async function uploadToSupabase() {
+      if (!supabaseClient || records.length === 0) {
+        showAlert('supabaseAlert', 'No records to upload!', 'error');
+        return;
+      }
+
+      try {
+        showAlert('supabaseAlert', `⏳ Uploading ${records.length} records...`, 'success');
+
+        const recordsToUpload = records.map(r => ({
+          id: r.id,
+          serialNo: r.serialNo,
+          refNumber: r.refNumber,
+          amount: r.amount,
+          date: r.date,
+          time: r.time,
+          entryType: r.entryType || 'manual'
+        }));
+
+        const { data, error } = await supabaseClient
+          .from('billing_records')
+          .upsert(recordsToUpload, { onConflict: 'id' });
+
+        if (error) throw error;
+
+        showAlert('supabaseAlert', `✓ Successfully uploaded ${records.length} records to cloud!`, 'success');
+      } catch (error) {
+        showAlert('supabaseAlert', `❌ Upload failed: ${error.message}`, 'error');
+      }
+    }
+
+    async function downloadFromSupabase() {
+      if (!supabaseClient) {
+        showAlert('supabaseAlert', 'Please connect first!', 'error');
+        return;
+      }
+
+      try {
+        showAlert('supabaseAlert', '⏳ Downloading from cloud...', 'success');
+
+        const { data, error } = await supabaseClient
+          .from('billing_records')
+          .select('*')
+          .order('serialNo', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          records = data.map(r => ({
+            id: r.id,
+            serialNo: r.serialNo,
+            refNumber: r.refNumber,
+            amount: parseFloat(r.amount),
+            date: r.date,
+            time: r.time,
+            entryType: r.entryType,
+            timestamp: r.created_at
+          }));
+          
+          saveRecords();
+          renderRecords();
+          renderRecentEntries();
+          renderBarcodeRecentEntries();
+          
+          showAlert('supabaseAlert', `✓ Downloaded ${data.length} records from cloud!`, 'success');
+        } else {
+          showAlert('supabaseAlert', '⚠️ No records found in cloud', 'success');
+        }
+      } catch (error) {
+        showAlert('supabaseAlert', `❌ Download failed: ${error.message}`, 'error');
+      }
+    }
+
+    async function syncSupabase() {
+      if (!supabaseClient) {
+        showAlert('supabaseAlert', 'Please connect first!', 'error');
+        return;
+      }
+
+      try {
+        showAlert('supabaseAlert', '⏳ Syncing...', 'success');
+
+        // Download from cloud
+        const { data: cloudRecords, error } = await supabaseClient
+          .from('billing_records')
+          .select('*');
+
+        if (error) throw error;
+
+        // Merge local and cloud records (using id as unique key)
+        const localMap = new Map(records.map(r => [r.id, r]));
+        const cloudMap = new Map((cloudRecords || []).map(r => [r.id, r]));
+
+        // Combine both
+        const allIds = new Set([...localMap.keys(), ...cloudMap.keys()]);
+        const mergedRecords = [];
+
+        allIds.forEach(id => {
+          const localRecord = localMap.get(id);
+          const cloudRecord = cloudMap.get(id);
+
+          if (localRecord && cloudRecord) {
+            // Exists in both - keep the one with later timestamp
+            mergedRecords.push(localRecord);
+          } else if (localRecord) {
+            mergedRecords.push(localRecord);
+          } else if (cloudRecord) {
+            mergedRecords.push({
+              id: cloudRecord.id,
+              serialNo: cloudRecord.serialNo,
+              refNumber: cloudRecord.refNumber,
+              amount: parseFloat(cloudRecord.amount),
+              date: cloudRecord.date,
+              time: cloudRecord.time,
+              entryType: cloudRecord.entryType
+            });
+          }
+        });
+
+        // Save merged records locally
+        records = mergedRecords;
+        saveRecords();
+
+        // Upload all to cloud
+        const recordsToUpload = records.map(r => ({
+          id: r.id,
+          serialNo: r.serialNo,
+          refNumber: r.refNumber,
+          amount: r.amount,
+          date: r.date,
+          time: r.time,
+          entryType: r.entryType || 'manual'
+        }));
+
+        await supabaseClient
+          .from('billing_records')
+          .upsert(recordsToUpload, { onConflict: 'id' });
+
+        renderRecords();
+        renderRecentEntries();
+        renderBarcodeRecentEntries();
+
+        showAlert('supabaseAlert', `✓ Sync complete! Total records: ${records.length}`, 'success');
+      } catch (error) {
+        showAlert('supabaseAlert', `❌ Sync failed: ${error.message}`, 'error');
+      }
+    }
+
+    async function autoSaveToSupabase(record) {
+      if (!supabaseClient || !isOnlineMode) return;
+
+      try {
+        const recordToSave = {
+          id: record.id,
+          serialNo: record.serialNo,
+          refNumber: record.refNumber,
+          amount: record.amount,
+          date: record.date,
+          time: record.time,
+          entryType: record.entryType || 'manual'
+        };
+
+        await supabaseClient
+          .from('billing_records')
+          .upsert([recordToSave], { onConflict: 'id' });
+
+        console.log('Auto-saved to cloud:', record.serialNo);
+      } catch (error) {
+        console.error('Auto-save failed:', error);
+      }
+    }
+
+    // ============================================================================
+    // PROFILE MANAGEMENT
+    // ============================================================================
+
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem('user_profile') || '{}');
+      
+      const name = profile.name || 'Guest User';
+      const pic = profile.picture || defaultProfilePic;
+      
+      // Update header
+      document.getElementById('userName').textContent = name;
+      document.getElementById('userProfilePic').src = pic;
+      
+      // Update profile tab
+      document.getElementById('profileName').value = profile.name || '';
+      document.getElementById('businessName').value = profile.business || '';
+      document.getElementById('profileEmail').value = profile.email || '';
+      document.getElementById('profilePhone').value = profile.phone || '';
+      document.getElementById('profilePicPreview').src = pic;
+    }
+
+    function handleProfilePicture(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file!');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const pic = e.target.result;
+        document.getElementById('profilePicPreview').src = pic;
+        document.getElementById('userProfilePic').src = pic;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProfile() {
+      const name = document.getElementById('profileName').value.trim();
+      
+      if (!name) {
+        alert('Please enter your name!');
+        return;
+      }
+      
+      const profile = {
+        name: name,
+        business: document.getElementById('businessName').value.trim(),
+        email: document.getElementById('profileEmail').value.trim(),
+        phone: document.getElementById('profilePhone').value.trim(),
+        picture: document.getElementById('profilePicPreview').src
+      };
+      
+      localStorage.setItem('user_profile', JSON.stringify(profile));
+      
+      // Update header
+      document.getElementById('userName').textContent = name;
+      document.getElementById('userProfilePic').src = profile.picture;
+      
+      alert('✓ Profile saved successfully!');
+    }
+
+    function clearProfile() {
+      if (!confirm('Clear profile data?')) return;
+      
+      localStorage.removeItem('user_profile');
+      
+      document.getElementById('profileName').value = '';
+      document.getElementById('businessName').value = '';
+      document.getElementById('profileEmail').value = '';
+      document.getElementById('profilePhone').value = '';
+      document.getElementById('profilePicPreview').src = defaultProfilePic;
+      document.getElementById('userProfilePic').src = defaultProfilePic;
+      document.getElementById('userName').textContent = 'Guest User';
+      
+      alert('Profile cleared!');
+    }
+
+    function openProfileSettings() {
+      switchTab('profile');
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(tab => {
+        if (tab.textContent.includes('Profile')) {
+          tab.classList.add('active');
+        }
+      });
+    }
+
+    // ============================================================================
+    // AUTOMATIC OFFLINE SYNC
+    // ============================================================================
+
+    function checkOfflinePendingData() {
+      const hasLocalData = records && records.length > 0;
+      return hasLocalData;
+    }
+
+    async function autoSyncOfflineData() {
+      if (!isOnlineMode || !supabaseClient || !isReallyOnline) return;
+      
+      if (!checkOfflinePendingData()) return;
+      
+      if (offlineSyncPending) return;
+      
+      try {
+        offlineSyncPending = true;
+        
+        const { data: cloudRecords, error } = await supabaseClient
+          .from('billing_records')
+          .select('id');
+        
+        if (error) throw error;
+        
+        const cloudIds = new Set((cloudRecords || []).map(r => r.id));
+        const localOnlyRecords = records.filter(r => !cloudIds.has(r.id));
+        
+        if (localOnlyRecords.length > 0) {
+          const recordsToUpload = localOnlyRecords.map(r => ({
+            id: r.id,
+            serialNo: r.serialNo,
+            refNumber: r.refNumber,
+            amount: r.amount,
+            date: r.date,
+            time: r.time,
+            entryType: r.entryType || 'manual'
+          }));
+          
+          await supabaseClient
+            .from('billing_records')
+            .upsert(recordsToUpload, { onConflict: 'id' });
+          
+          console.log(`✓ Auto-synced ${localOnlyRecords.length} offline records to cloud`);
+          
+          showQuickNotification(`☁️ Synced ${localOnlyRecords.length} offline records to cloud!`);
+        }
+      } catch (error) {
+        console.error('Auto-sync failed:', error);
+      } finally {
+        offlineSyncPending = false;
+      }
+    }
+
+    function checkAndSyncOfflineData() {
+      if (isOnlineMode && isReallyOnline && checkOfflinePendingData()) {
+        setTimeout(() => {
+          autoSyncOfflineData();
+        }, 3000);
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
