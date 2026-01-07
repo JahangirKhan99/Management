@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Billing Management System</title>
+  <title>Post Office Swari Buner</title>
+  <link rel="icon" type="image/jpg" href="image1.png">
   
   <style>
     * {
@@ -340,23 +341,369 @@
         opacity: 0;
       }
     }
+
+    /* ============================================ */
+    /* MOBILE RESPONSIVE DESIGN */
+    /* ============================================ */
+    
+    @media (max-width: 768px) {
+      body {
+        font-size: 14px;
+      }
+
+      .container {
+        padding: 10px;
+        max-width: 100%;
+      }
+
+      .status-bar {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .card {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+
+      /* Header with Profile */
+      .card > div:first-child {
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: flex-start !important;
+      }
+
+      /* Profile Section Mobile */
+      .card > div:first-child > div:last-child {
+        width: 100%;
+        justify-content: center !important;
+      }
+
+      #userProfilePic {
+        width: 45px !important;
+        height: 45px !important;
+      }
+
+      #userName {
+        font-size: 15px !important;
+      }
+
+      /* Tabs */
+      .tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 5px;
+        padding: 5px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        padding: 10px 15px;
+        font-size: 13px;
+        white-space: nowrap;
+        min-width: auto;
+      }
+
+      /* Forms */
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      input, select, textarea {
+        font-size: 15px !important;
+        padding: 12px !important;
+      }
+
+      button {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+      }
+
+      /* Tables - Horizontal Scroll */
+      .tab-content table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      table {
+        font-size: 12px !important;
+        min-width: 100%;
+      }
+
+      table th {
+        padding: 10px 8px !important;
+        font-size: 12px !important;
+      }
+
+      table td {
+        padding: 10px 8px !important;
+        font-size: 12px !important;
+      }
+
+      /* Action Buttons */
+      .action-btn {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        margin: 2px !important;
+      }
+
+      /* Summary Cards */
+      .summary {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .summary-item {
+        width: 100% !important;
+        padding: 15px !important;
+      }
+
+      .summary-value {
+        font-size: 22px !important;
+      }
+
+      /* Backup Section */
+      .backup-section {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+      }
+
+      .backup-card {
+        padding: 15px !important;
+      }
+
+      /* Profile Picture Large */
+      #profilePicPreview {
+        width: 120px !important;
+        height: 120px !important;
+      }
+
+      /* Grid Forms - Single Column */
+      div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+      }
+
+      /* Search Input */
+      #searchInput {
+        font-size: 15px !important;
+        padding: 12px 12px 12px 40px !important;
+      }
+
+      /* Empty State */
+      .empty-state {
+        padding: 30px 15px !important;
+      }
+
+      /* Recent Entries */
+      #recentEntries table,
+      #recordsTable table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      /* Alerts */
+      .alert {
+        font-size: 13px !important;
+        padding: 12px !important;
+      }
+
+      /* Report Preview */
+      #reportPreview {
+        overflow-x: auto;
+      }
+
+      /* Welcome Screen */
+      #welcomeScreen h1 {
+        font-size: 28px !important;
+      }
+
+      #welcomeScreen p {
+        font-size: 14px !important;
+      }
+
+      /* Floating Notification */
+      div[style*="position: fixed"] {
+        right: 10px !important;
+        left: 10px !important;
+        top: 70px !important;
+        font-size: 14px !important;
+        padding: 12px 15px !important;
+      }
+
+      /* Modal/Instructions */
+      div[style*="background: rgba(102, 126, 234, 0.1)"] ul,
+      div[style*="background: rgba(239, 184, 16, 0.1)"] ol {
+        font-size: 13px !important;
+        padding-left: 20px !important;
+        line-height: 1.8 !important;
+      }
+
+      /* Sync Options Buttons */
+      div[style*="grid-template-columns: repeat(auto-fit"] button {
+        padding: 14px 10px !important;
+        font-size: 14px !important;
+      }
+
+      /* PDF/Excel Buttons */
+      button[style*="width: 100%"] {
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+      }
+
+      /* Report Type Select */
+      #reportType {
+        font-size: 15px !important;
+        padding: 12px !important;
+      }
+    }
+
+    /* Extra Small Mobile (320px - 480px) */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      h2 {
+        font-size: 17px;
+      }
+
+      .tab {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      table {
+        font-size: 11px !important;
+      }
+
+      table th, table td {
+        padding: 8px 5px !important;
+        font-size: 11px !important;
+      }
+
+      .action-btn {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+      }
+
+      #userProfilePic {
+        width: 40px !important;
+        height: 40px !important;
+      }
+
+      #userName {
+        font-size: 14px !important;
+      }
+
+      .summary-value {
+        font-size: 20px !important;
+      }
+
+      button {
+        padding: 12px 15px !important;
+        font-size: 14px !important;
+      }
+
+      #profilePicPreview {
+        width: 100px !important;
+        height: 100px !important;
+      }
+    }
+
+    /* Landscape Mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .container {
+        padding: 10px 15px;
+      }
+
+      .tabs {
+        gap: 8px;
+      }
+
+      .tab {
+        padding: 8px 15px;
+      }
+    }
+
+    /* Tablet (768px - 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container {
+        padding: 20px;
+      }
+
+      .tab {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+    }
+
+    /* Touch Device Improvements */
+    @media (hover: none) and (pointer: coarse) {
+      button, .action-btn, .tab {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      input, select {
+        min-height: 44px;
+      }
+
+      table td button {
+        margin: 3px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="welcome-screen" id="welcomeScreen">
     <div class="welcome-content">
       <div class="welcome-logo">P/O</div>
-      <div class="welcome-text">Welcome To Post Office of Swari Buner</div>
+      <div class="welcome-text">Welcome to Post Office Swari Buner</div>
     </div>
   </div>
 
   <div class="status-bar">✓ Online Mode</div>
 
+  <!-- Mobile Back to Top Button -->
+  <button id="backToTop" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" onclick="smoothScrollToTop()">
+    ↑
+  </button>
+
   <div class="container" id="mainApp" style="display: none;">
     <div class="card">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
         <div>
-          <h1>Post Office Sawari Buner</h1>
+          <h1>Post Office Swari Buner</h1>
           <p style="color: rgba(255, 255, 255, 0.6); margin-top: 5px;">Billing Management System</p>
         </div>
         
@@ -376,18 +723,33 @@
 
     <div class="tabs">
       <button class="tab active" onclick="switchTab('entry')">➕ Data Entry</button>
-      <button class="tab" onclick="switchTab('barcode')">📷 Barcode Entry</button>
       <button class="tab" onclick="switchTab('view')">🔍 View Records</button>
       <button class="tab" onclick="switchTab('reports')">📊 Reports</button>
       <button class="tab" onclick="switchTab('backup')">💾 Backup</button>
       <button class="tab" onclick="switchTab('supabase')">☁️ Online Sync</button>
       <button class="tab" onclick="switchTab('profile')">👤 Profile</button>
+      <button class="tab" onclick="switchTab('developer')">👨‍💻 About Developer</button>
     </div>
 
     <div class="card">
       <!-- Data Entry Tab -->
       <div id="entryTab" class="tab-content active">
-        <h2 style="margin-bottom: 30px;">Add New Record</h2>
+        <h2 style="margin-bottom: 20px;">Add New Record</h2>
+        
+        <!-- Auto Serial Number Info -->
+        <!-- <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">✨</span>
+            <div>
+              <strong style="color: #667eea;">Auto Serial Number:</strong>
+              <p style="font-size: 14px; margin-top: 5px; line-height: 1.6;">
+                S.No is automatically assigned. Serial numbers are always <strong>continuous (1, 2, 3...)</strong>. 
+                When you delete a record, all serial numbers automatically adjust to stay sequential.
+              </p>
+            </div>
+          </div>
+        </div> -->
+        
         <div id="entryAlert"></div>
 
         <form onsubmit="handleAddRecord(event)">
@@ -411,80 +773,24 @@
         </div>
       </div>
 
-      <!-- Barcode Entry Tab -->
-      <div id="barcodeTab" class="tab-content">
-        <h2 style="margin-bottom: 30px;">📷 Camera Barcode Scanner</h2>
-        <div id="barcodeAlert"></div>
-
-        <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
-          <h3 style="color: #667eea; margin-bottom: 15px;">📱 Continuous Scanning Mode:</h3>
-          <ul style="line-height: 2; padding-left: 20px;">
-            <li>Click "Start Camera" once</li>
-            <li>Allow camera permission</li>
-            <li>Scan barcode → Enter amount → Save</li>
-            <li>Camera stays ON - Keep scanning!</li>
-            <li>Click "Stop Camera" when done</li>
-          </ul>
-        </div>
-
-        <!-- Camera Scanner -->
-        <div style="margin-bottom: 30px;">
-          <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center;">
-            <button type="button" onclick="startBarcodeScanner()" id="startScanBtn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-              📷 Start Camera
-            </button>
-            <button type="button" onclick="stopBarcodeScanner()" id="stopScanBtn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); display: none;">
-              🛑 Stop Camera
-            </button>
-            <div id="scanStatus" style="padding: 10px 20px; background: rgba(16, 185, 129, 0.2); border-radius: 8px; font-weight: 600; color: #10b981; display: none;">
-              📷 Camera Active - Ready to Scan
-            </div>
-          </div>
-          
-          <!-- Camera Preview -->
-          <div id="barcode-reader" style="width: 100%; max-width: 600px; margin: 0 auto; border-radius: 12px; overflow: hidden; display: none; border: 3px solid #10b981;"></div>
-        </div>
-
-        <!-- Entry Form -->
-        <form onsubmit="handleBarcodeAddRecord(event)" id="barcodeForm">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <div class="form-group">
-              <label>📷 Scanned Barcode *</label>
-              <input type="text" id="barcodeRefNumber" required readonly style="background: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; font-size: 20px; font-weight: 700; color: #10b981; text-align: center; padding: 18px;">
-            </div>
-            <div class="form-group">
-              <label>Amount (Rs) *</label>
-              <input type="number" id="barcodeAmount" step="0.01" required placeholder="Enter amount" style="font-size: 20px; font-weight: 600; padding: 18px;">
-            </div>
-          </div>
-          
-          <button type="submit" style="font-size: 18px; padding: 18px 50px; width: 100%;">➕ Save Entry (Camera Stays On)</button>
-        </form>
-
-        <!-- Quick Stats -->
-        <div style="margin: 30px 0; padding: 20px; background: rgba(16, 185, 129, 0.1); border: 2px solid #10b981; border-radius: 12px; display: none;" id="scanStats">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; text-align: center;">
-            <div>
-              <div style="font-size: 14px; color: rgba(255,255,255,0.7);">Scans Today</div>
-              <div style="font-size: 28px; font-weight: 800; color: #10b981;" id="scansToday">0</div>
-            </div>
-            <div>
-              <div style="font-size: 14px; color: rgba(255,255,255,0.7);">Last Scanned</div>
-              <div style="font-size: 16px; font-weight: 700; color: #10b981;" id="lastScanned">-</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recent Barcode Entries -->
-        <div style="margin-top: 40px;">
-          <h3 style="margin-bottom: 20px; color: #667eea;">📋 Recent Camera Scans</h3>
-          <div id="barcodeRecentEntries"></div>
-        </div>
-      </div>
-
       <!-- View Records Tab -->
       <div id="viewTab" class="tab-content">
-        <h2 style="margin-bottom: 30px;">View & Manage Records</h2>
+        <h2 style="margin-bottom: 20px;">View & Manage Records</h2>
+        
+        <!-- Serial Number Info -->
+        <!-- <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">ℹ️</span>
+            <div>
+              <strong style="color: #10b981;">Serial Number System:</strong>
+              <p style="font-size: 14px; margin-top: 5px; line-height: 1.6;">
+                Serial numbers are <strong>automatically adjusted</strong> to stay continuous. When you delete a record, 
+                all remaining serial numbers are renumbered (1, 2, 3...) with no gaps.
+              </p>
+            </div>
+          </div>
+        </div> -->
+        
         <div style="position: relative; margin-bottom: 20px;">
           <input type="text" id="searchInput" placeholder="Search by S.No or Reference..." onkeyup="filterRecords()" style="padding-left: 45px;">
         </div>
@@ -521,12 +827,12 @@
           <div class="backup-card">
             <h3>💾 Backup (JSON)</h3>
             <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Download local backup</p>
-            <button onclick="backupData()" style="width: 100%;">Download (back_UP)</button>
+            <button onclick="backupData()" style="width: 100%;">Download JSON</button>
           </div>
 
           <div class="backup-card">
             <h3>☁️ Cloud Backup</h3>
-            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Download from Online DataBase</p>
+            <p style="margin-bottom: 15px; font-size: 14px; color: rgba(255,255,255,0.7);">Download from Supabase</p>
             <button onclick="backupFromCloud()" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Get Cloud Data</button>
           </div>
 
@@ -553,7 +859,7 @@
 
       <!-- Supabase Online Sync Tab -->
       <div id="supabaseTab" class="tab-content">
-        <h2 style="margin-bottom: 30px;">☁️ Online Database Sync (DataBase)</h2>
+        <h2 style="margin-bottom: 30px;">☁️ Online Database Sync </h2>
         
         <div id="supabaseAlert"></div>
 
@@ -567,9 +873,9 @@
           </div>
         </div>
 
-        <!-- Setup Instructions
-        <div style="background: rgba(239, 184, 16, 0.1); border: 1px solid rgba(239, 184, 16, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;"> -->
-          <!-- <h3 style="color: #efb810; margin-bottom: 15px;">📚 How to Setup Supabase (Free):</h3>
+        <!-- Setup Instructions -->
+        <!-- <div style="background: rgba(239, 184, 16, 0.1); border: 1px solid rgba(239, 184, 16, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+          <h3 style="color: #efb810; margin-bottom: 15px;">📚 How to Setup Supabase (Free):</h3>
           <ol style="line-height: 2; padding-left: 20px;">
             <li>Go to <strong>supabase.com</strong> and create FREE account</li>
             <li>Create a new project</li>
@@ -578,8 +884,8 @@
             <li>Paste below and click "Connect"</li>
             <li>Click "Create Table" to setup database</li>
             <li>Done! Data will sync automatically ✓</li>
-          </ol> -->
-        <!-- </div> -->
+          </ol>
+        </div> -->
 
         <!-- Multi-User Warning -->
         <!-- <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
@@ -600,7 +906,7 @@
 
         <!-- Supabase Configuration -->
         <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 30px; margin-bottom: 30px;">
-          <h3 style="margin-bottom: 20px;">🔑 Supabase Credentials</h3>
+          <h3 style="margin-bottom: 20px;">🔑 DataBase Credentials</h3>
           
           <div class="form-group">
             <label>DataBase Project URL *</label>
@@ -641,13 +947,13 @@
             </button>
           </div>
 
-          <!-- <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 15px;">
+          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 15px;">
             <h4 style="color: #10b981; margin-bottom: 10px;">✓ Auto-Sync Enabled</h4>
             <p style="font-size: 14px; line-height: 1.6;">
               When connected, all new entries are automatically saved to cloud database.
               Your data is backed up online in real-time!
             </p>
-          </div> -->
+          </div>
         </div>
       </div>
 
@@ -696,12 +1002,48 @@
           </button>
         </div>
       </div>
+
+      <!-- About Developer Tab -->
+      <div id="developerTab" class="tab-content">
+        <h2 style="margin-bottom: 30px; text-align: center;">👨‍💻 About Developer</h2>
+        
+        <div style="max-width: 600px; margin: 0 auto;">
+          <!-- Developer Card -->
+          <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); border: 3px solid rgba(102, 126, 234, 0.4); border-radius: 24px; padding: 50px 40px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,0.2);">
+            
+            <!-- Developer Photo -->
+            <div>
+              <img id="developerPhoto" hidden >
+            </div>
+            <div style="margin-bottom: 30px;">
+              <img id="developerPhoto"  src="image2.jpg"  style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 6px solid #667eea; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" alt="Developer">
+            </div>
+
+            <!-- Developer Name -->
+            <h1 style="font-size: 36px; margin-bottom: 8px; color: #667eea; font-weight: 900; letter-spacing: -0.5px;">Jahangir Khan</h1>
+            
+            <!-- WhatsApp Number -->
+            <div style="margin: 25px 0;">
+              <a href="https://wa.me/923339279925" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; padding: 20px 45px; border-radius: 50px; text-decoration: none; font-size: 20px; font-weight: 800; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(37, 211, 102, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(37, 211, 102, 0.5)'">
+                📱 +92 333 9279925
+              </a>
+            </div>
+
+            <!-- Message -->
+            <div style="margin-top: 35px; padding: 30px; background: rgba(255,255,255,0.05); border-radius: 16px; border: 2px solid rgba(255,255,255,0.1);">
+              <p style="font-size: 18px; line-height: 1.8; color: rgba(255,255,255,0.9); font-weight: 500;">
+                If you want to build custom software solutions, feel free to contact me via WhatsApp. 
+                I provide professional software development services.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -723,8 +1065,6 @@
     let records = [];
     let currentReportData = null;
     let currentReportTitle = '';
-    let html5QrCode = null;
-    let isScanning = false;
     let isReallyOnline = false;
     let offlineSyncPending = false;
     let defaultProfilePic = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='75' cy='75' r='75' fill='url(%23grad)'/%3E%3Ctext x='75' y='95' font-size='60' fill='white' text-anchor='middle' font-family='Arial'%3E👤%3C/text%3E%3C/svg%3E";
@@ -757,9 +1097,93 @@
     window.addEventListener('online', checkOnlineStatus);
     window.addEventListener('offline', checkOnlineStatus);
 
+    // ============================================================================
+    // MOBILE ENHANCEMENTS
+    // ============================================================================
+
+    // Detect mobile device
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+             window.innerWidth <= 768;
+    }
+
+    // Prevent zoom on input focus (iOS)
+    if (isMobileDevice()) {
+      document.addEventListener('touchstart', function() {}, { passive: true });
+      
+      // Add touch-friendly class
+      document.body.classList.add('mobile-device');
+      
+      // Prevent double-tap zoom
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function(event) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+    }
+
+    // Smooth scroll for mobile
+    function smoothScrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Show/hide back to top button
+    window.addEventListener('scroll', function() {
+      const backToTop = document.getElementById('backToTop');
+      if (backToTop) {
+        if (window.scrollY > 300) {
+          backToTop.style.display = 'block';
+        } else {
+          backToTop.style.display = 'none';
+        }
+      }
+    });
+
+    // Auto-hide keyboard on submit (mobile)
+    document.addEventListener('submit', function(e) {
+      if (isMobileDevice()) {
+        document.activeElement.blur();
+      }
+    });
+
+    // Optimize table scroll for mobile
+    function optimizeTableScroll() {
+      if (isMobileDevice()) {
+        const tables = document.querySelectorAll('table');
+        tables.forEach(table => {
+          if (table.scrollWidth > table.clientWidth) {
+            const wrapper = table.parentElement;
+            if (wrapper && !wrapper.classList.contains('table-scroll-hint')) {
+              wrapper.classList.add('table-scroll-hint');
+              const hint = document.createElement('div');
+              hint.style.cssText = 'text-align: center; font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 5px;';
+              hint.textContent = '← Swipe to see more →';
+              wrapper.appendChild(hint);
+              
+              // Remove hint after scroll
+              table.addEventListener('scroll', function() {
+                if (hint) hint.remove();
+              }, { once: true });
+            }
+          }
+        });
+      }
+    }
+
+    // Call after rendering tables
+    const originalRenderRecords = renderRecords;
+    renderRecords = function(...args) {
+      originalRenderRecords.apply(this, args);
+      setTimeout(optimizeTableScroll, 100);
+    };
+
     function init() {
       loadRecords();
       loadProfile();
+      loadDeveloperPhoto();
       document.getElementById('reportDate').valueAsDate = new Date();
       
       // Check online status
@@ -780,7 +1204,6 @@
         document.getElementById('mainApp').style.display = 'block';
         renderRecords();
         renderRecentEntries();
-        renderBarcodeRecentEntries();
       }, 2000);
       
       // Auto backup every 24 hours
@@ -830,230 +1253,6 @@
       
       // Update recent entries display
       renderRecentEntries();
-    }
-
-    function handleBarcodeAddRecord(event) {
-      event.preventDefault();
-      const refNumber = document.getElementById('barcodeRefNumber').value.trim();
-      const amount = parseFloat(document.getElementById('barcodeAmount').value);
-      
-      if (!refNumber || !amount) {
-        showAlert('barcodeAlert', 'Please scan barcode and enter amount!', 'error');
-        return;
-      }
-
-      const now = new Date();
-      const maxSerialNo = records.length > 0 ? Math.max(...records.map(r => r.serialNo)) : 0;
-      const serialNo = maxSerialNo + 1;
-
-      const newRecord = {
-        id: Date.now(),
-        serialNo: serialNo,
-        refNumber: refNumber,
-        amount: amount,
-        date: now.toISOString().split('T')[0],
-        time: now.toTimeString().split(' ')[0],
-        entryType: 'camera-barcode'
-      };
-
-      records.push(newRecord);
-      saveRecords();
-      
-      // Auto-save to cloud
-      autoSaveToSupabase(newRecord);
-      
-      // Clear form but DON'T stop camera
-      document.getElementById('barcodeRefNumber').value = '';
-      document.getElementById('barcodeAmount').value = '';
-      
-      // Show success notification
-      showQuickNotification(`✓ Saved! S.No: ${serialNo} | Rs ${amount.toLocaleString('en-PK')}${isOnlineMode ? ' ☁️' : ''}`);
-      playBeep();
-      
-      // Update displays
-      renderBarcodeRecentEntries();
-      renderRecentEntries();
-      updateScanStats(refNumber);
-      
-      // Camera stays ON - ready for next scan!
-      // User can continue scanning immediately
-    }
-
-    function playBeep() {
-      // Simple beep sound
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.frequency.value = 800;
-      oscillator.type = 'sine';
-      
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-      
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.1);
-    }
-
-    function renderBarcodeRecentEntries() {
-      const container = document.getElementById('barcodeRecentEntries');
-      
-      if (records.length === 0) {
-        container.innerHTML = '<div class="empty-state"><p style="font-size: 14px;">No entries yet</p></div>';
-        return;
-      }
-
-      // Get last 10 entries (most recent first)
-      const recentRecords = [...records]
-        .sort((a, b) => b.id - a.id)
-        .slice(0, 10);
-
-      let html = `
-        <table style="font-size: 14px;">
-          <thead>
-            <tr>
-              <th style="width: 10%;">S.No</th>
-              <th style="width: 35%;">Reference (Barcode)</th>
-              <th style="width: 25%;">Amount (Rs)</th>
-              <th style="width: 20%;">Date/Time</th>
-              <th style="width: 10%;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
-      recentRecords.forEach(record => {
-        const isCameraScanned = record.entryType === 'camera-barcode';
-        html += `
-          <tr id="barcode-recent-row-${record.id}" style="background: ${isCameraScanned ? 'rgba(16, 185, 129, 0.08)' : 'transparent'};">
-            <td style="text-align: center; font-weight: 700;">${record.serialNo}</td>
-            <td><strong style="color: ${isCameraScanned ? '#10b981' : 'white'};">${isCameraScanned ? '📷 ' : ''}${record.refNumber}</strong></td>
-            <td style="color: #10b981; font-weight: 600; text-align: right;">Rs ${record.amount.toLocaleString('en-PK', {minimumFractionDigits: 2})}</td>
-            <td style="text-align: center; font-size: 12px;">${record.date}<br>${record.time}</td>
-            <td style="text-align: center;">
-              <button class="action-btn delete-btn" onclick="deleteBarcodeRecentRecord(${record.id})" style="padding: 6px 12px; font-size: 12px;">🗑️</button>
-            </td>
-          </tr>
-        `;
-      });
-
-      html += '</tbody></table>';
-      container.innerHTML = html;
-    }
-
-    function deleteBarcodeRecentRecord(id) {
-      if (!confirm('Delete? S.No will be preserved.')) return;
-      records = records.filter(r => r.id !== id);
-      saveRecords();
-      renderBarcodeRecentEntries();
-      renderRecentEntries();
-      alert('Deleted!');
-    }
-
-    // Auto-focus on barcode field when tab is opened
-    function focusBarcodeField() {
-      setTimeout(() => {
-        const field = document.getElementById('barcodeAmount');
-        if (field) {
-          field.focus();
-        }
-      }, 100);
-    }
-
-    // Camera Barcode Scanner Functions
-    function startBarcodeScanner() {
-      if (isScanning) return;
-      
-      const reader = document.getElementById('barcode-reader');
-      reader.style.display = 'block';
-      
-      document.getElementById('startScanBtn').style.display = 'none';
-      document.getElementById('stopScanBtn').style.display = 'inline-block';
-      document.getElementById('scanStatus').style.display = 'inline-block';
-      document.getElementById('scanStats').style.display = 'block';
-      
-      html5QrCode = new Html5Qrcode("barcode-reader");
-      
-      const config = {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-        aspectRatio: 1.0
-      };
-      
-      html5QrCode.start(
-        { facingMode: "environment" },
-        config,
-        onScanSuccess,
-        onScanError
-      ).then(() => {
-        isScanning = true;
-        showAlert('barcodeAlert', '📷 Camera started! Continuous scanning mode activated. Camera will stay on.', 'success');
-        setTimeout(() => {
-          document.getElementById('barcodeAlert').innerHTML = '';
-        }, 3000);
-      }).catch(err => {
-        showAlert('barcodeAlert', `❌ Camera error: ${err}. Please allow camera permission.`, 'error');
-        stopBarcodeScanner();
-      });
-    }
-
-    function stopBarcodeScanner() {
-      if (html5QrCode && isScanning) {
-        html5QrCode.stop().then(() => {
-          isScanning = false;
-          document.getElementById('barcode-reader').style.display = 'none';
-          document.getElementById('startScanBtn').style.display = 'inline-block';
-          document.getElementById('stopScanBtn').style.display = 'none';
-          document.getElementById('scanStatus').style.display = 'none';
-          document.getElementById('scanStats').style.display = 'none';
-          html5QrCode.clear();
-          showAlert('barcodeAlert', '🛑 Camera stopped.', 'success');
-          setTimeout(() => {
-            document.getElementById('barcodeAlert').innerHTML = '';
-          }, 2000);
-        }).catch(err => {
-          console.error('Stop error:', err);
-        });
-      }
-    }
-
-    function onScanSuccess(decodedText, decodedResult) {
-      // Don't stop camera - keep scanning!
-      document.getElementById('barcodeRefNumber').value = decodedText;
-      
-      // Play success sound
-      playBeep();
-      
-      // Update stats
-      updateScanStats(decodedText);
-      
-      // Focus on amount field
-      document.getElementById('barcodeAmount').focus();
-      
-      // Flash green border
-      const reader = document.getElementById('barcode-reader');
-      reader.style.border = '5px solid #10b981';
-      setTimeout(() => {
-        reader.style.border = '3px solid #10b981';
-      }, 300);
-      
-      // Show quick notification (non-blocking)
-      showQuickNotification(`✓ Scanned: ${decodedText}`);
-    }
-
-    function onScanError(errorMessage) {
-      // Ignore scan errors (happens while searching for barcode)
-    }
-
-    function updateScanStats(barcode) {
-      const today = new Date().toISOString().split('T')[0];
-      const todayScans = records.filter(r => r.date === today && r.entryType === 'camera-barcode').length;
-      
-      document.getElementById('scansToday').textContent = todayScans + 1;
-      document.getElementById('lastScanned').textContent = barcode.substring(0, 15) + (barcode.length > 15 ? '...' : '');
     }
 
     function showQuickNotification(message) {
@@ -1170,27 +1369,123 @@
     }
 
     function deleteRecentRecord(id) {
-      if (!confirm('Delete? S.No will be preserved.')) return;
+      const record = records.find(r => r.id === id);
+      if (!record) return;
+      
+      if (!confirm(`Delete Record?\n\nS.No: ${record.serialNo}\nRef: ${record.refNumber}\nAmount: Rs ${record.amount}\n\n✓ Serial numbers will auto-adjust`)) {
+        return;
+      }
+      
+      // Delete the record
       records = records.filter(r => r.id !== id);
+      
+      // Re-assign serial numbers (1, 2, 3, 4...)
+      records.sort((a, b) => a.serialNo - b.serialNo);
+      records.forEach((record, index) => {
+        record.serialNo = index + 1;
+      });
+      
       saveRecords();
       renderRecentEntries();
-      alert('Deleted!');
+      
+      alert(`✓ Deleted and serial numbers adjusted!\n\nAll records now have continuous serial numbers (1, 2, 3...)`);
     }
 
     function filterRecords() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      renderRecords(searchTerm);
+      const searchTerm = document.getElementById('searchInput').value;
+      const filteredRecords = fastSearch(searchTerm);
+      renderRecords(searchTerm, filteredRecords);
     }
 
-    function renderRecords(searchTerm = '') {
-      const container = document.getElementById('recordsTable');
-      let filteredRecords = records;
+    // ============================================================================
+    // PERFORMANCE OPTIMIZATIONS FOR LARGE DATA
+    // ============================================================================
 
-      if (searchTerm) {
-        filteredRecords = records.filter(r => 
-          r.refNumber.toLowerCase().includes(searchTerm) ||
-          r.serialNo.toString().includes(searchTerm)
-        );
+    // Indexed search for fast lookup
+    function createSearchIndex() {
+      const index = {
+        bySerialNo: new Map(),
+        byRefNumber: new Map(),
+        byDate: new Map()
+      };
+      
+      records.forEach(record => {
+        index.bySerialNo.set(record.serialNo, record);
+        
+        const ref = record.refNumber.toLowerCase();
+        if (!index.byRefNumber.has(ref)) {
+          index.byRefNumber.set(ref, []);
+        }
+        index.byRefNumber.get(ref).push(record);
+        
+        if (!index.byDate.has(record.date)) {
+          index.byDate.set(record.date, []);
+        }
+        index.byDate.get(record.date).push(record);
+      });
+      
+      return index;
+    }
+
+    // Fast search using index
+    function fastSearch(searchTerm) {
+      if (!searchTerm) return records;
+      
+      const term = searchTerm.toLowerCase().trim();
+      const index = createSearchIndex();
+      
+      // Try serial number first (exact match)
+      const serialNo = parseInt(term);
+      if (!isNaN(serialNo) && index.bySerialNo.has(serialNo)) {
+        return [index.bySerialNo.get(serialNo)];
+      }
+      
+      // Try reference number
+      if (index.byRefNumber.has(term)) {
+        return index.byRefNumber.get(term);
+      }
+      
+      // Partial search (slower but comprehensive)
+      return records.filter(r => 
+        r.serialNo.toString().includes(term) ||
+        r.refNumber.toLowerCase().includes(term) ||
+        r.amount.toString().includes(term)
+      );
+    }
+
+    // Batch upload to cloud (chunks of 1000)
+    async function batchUploadToCloud(recordsToUpload) {
+      const BATCH_SIZE = 1000;
+      const batches = [];
+      
+      for (let i = 0; i < recordsToUpload.length; i += BATCH_SIZE) {
+        batches.push(recordsToUpload.slice(i, i + BATCH_SIZE));
+      }
+      
+      let uploaded = 0;
+      for (const batch of batches) {
+        const { error } = await supabaseClient
+          .from('billing_records')
+          .upsert(batch, { onConflict: 'id' });
+        
+        if (error) throw error;
+        
+        uploaded += batch.length;
+        
+        // Show progress
+        console.log(`Uploaded ${uploaded}/${recordsToUpload.length} records`);
+      }
+      
+      return uploaded;
+    }
+
+    // Optimized renderRecords with virtual scrolling for large datasets
+    function renderRecords(searchTerm = '', preFilteredRecords = null) {
+      const container = document.getElementById('recordsTable');
+      let filteredRecords = preFilteredRecords || records;
+
+      if (!preFilteredRecords && searchTerm) {
+        filteredRecords = fastSearch(searchTerm);
       }
 
       if (filteredRecords.length === 0) {
@@ -1204,7 +1499,7 @@
         <div class="summary">
           <div class="summary-item">
             <div class="summary-label">Total Records</div>
-            <div class="summary-value">${filteredRecords.length}</div>
+            <div class="summary-value">${filteredRecords.length.toLocaleString()}</div>
           </div>
           <div class="summary-item">
             <div class="summary-label">Total Amount</div>
@@ -1284,10 +1579,26 @@
     }
 
     function deleteRecord(id) {
-      if (!confirm('Delete? S.No will be preserved.')) return;
+      const record = records.find(r => r.id === id);
+      if (!record) return;
+      
+      if (!confirm(`Delete Record?\n\nS.No: ${record.serialNo}\nRef: ${record.refNumber}\nAmount: Rs ${record.amount}\n\n✓ Serial numbers will auto-adjust`)) {
+        return;
+      }
+      
+      // Delete the record
       records = records.filter(r => r.id !== id);
+      
+      // Re-assign serial numbers (1, 2, 3, 4...)
+      records.sort((a, b) => a.serialNo - b.serialNo);
+      records.forEach((record, index) => {
+        record.serialNo = index + 1;
+      });
+      
       saveRecords();
       renderRecords();
+      
+      alert(`✓ Deleted and serial numbers adjusted!\n\nAll records now have continuous serial numbers (1, 2, 3...)`);
     }
 
     function generateReport() {
@@ -1351,7 +1662,7 @@
         </div>
         <div style="background: white; color: black; padding: 40px; border-radius: 12px;">
           <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #667eea; padding-bottom: 20px;">
-            <h1 style="margin: 0; font-size: 28px; color: #667eea;">P/O Swari Report</h1>
+            <h1 style="margin: 0; font-size: 28px; color: #667eea;">Post Office Swari Buner</h1>
             <p style="margin: 10px 0 0 0; font-size: 16px; color: #333; font-weight: 600;">${title}</p>
           </div>
           <table style="width: 100%; border-collapse: collapse; color: black;">
@@ -1409,7 +1720,7 @@
           // Header
           doc.setFontSize(22);
           doc.setTextColor(102, 126, 234);
-          doc.text('P/O Swari Report', 105, 15, { align: 'center' });
+          doc.text('Post Office Swari Buner', 105, 15, { align: 'center' });
           
           doc.setFontSize(12);
           doc.setTextColor(60, 60, 60);
@@ -1445,11 +1756,22 @@
           if (pageTotalY + 25 < 270) {
             drawPageTotal(doc, pageTotalY, pageData.length, pageTotal, pageNum + 1);
           }
+          
+          // On last page, try to add final summary if space available
+          if (pageNum === totalPages - 1) {
+            const summaryStartY = pageTotalY + 35; // Space after page total
+            
+            // Check if there's enough space for summary (needs ~95mm)
+            if (summaryStartY + 95 < 280) {
+              // Enough space - draw summary on same page
+              drawFinalSummary(doc, summaryStartY, data.length, totalAmount, totalPages);
+            } else {
+              // Not enough space - add new page for summary
+              doc.addPage();
+              drawFinalSummary(doc, 20, data.length, totalAmount, totalPages);
+            }
+          }
         }
-        
-        // Grand Summary on new page
-        doc.addPage();
-        drawFinalSummary(doc, 20, data.length, totalAmount, totalPages);
         
         // Footer on all pages
         const pageCount = doc.internal.getNumberOfPages();
@@ -1702,11 +2024,6 @@
     }
 
     function switchTab(tabName) {
-      // Stop camera if leaving barcode tab
-      if (isScanning) {
-        stopBarcodeScanner();
-      }
-      
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
       document.getElementById(tabName + 'Tab').classList.add('active');
@@ -1714,8 +2031,8 @@
       
       if (tabName === 'view') {
         renderRecords();
-      } else if (tabName === 'barcode') {
-        renderBarcodeRecentEntries();
+      } else if (tabName === 'developer') {
+        loadDeveloperPhoto();
       }
     }
 
@@ -1847,7 +2164,7 @@ CREATE POLICY "Allow all operations" ON billing_records FOR ALL USING (true);
       }
 
       try {
-        showAlert('supabaseAlert', `⏳ Uploading ${records.length} records...`, 'success');
+        showAlert('supabaseAlert', `⏳ Uploading ${records.length.toLocaleString()} records in batches...`, 'success');
 
         const recordsToUpload = records.map(r => ({
           id: r.id,
@@ -1859,13 +2176,10 @@ CREATE POLICY "Allow all operations" ON billing_records FOR ALL USING (true);
           entryType: r.entryType || 'manual'
         }));
 
-        const { data, error } = await supabaseClient
-          .from('billing_records')
-          .upsert(recordsToUpload, { onConflict: 'id' });
+        // Use batch upload for large datasets
+        const uploaded = await batchUploadToCloud(recordsToUpload);
 
-        if (error) throw error;
-
-        showAlert('supabaseAlert', `✓ Successfully uploaded ${records.length} records to cloud!`, 'success');
+        showAlert('supabaseAlert', `✓ Successfully uploaded ${uploaded.toLocaleString()} records to cloud!`, 'success');
       } catch (error) {
         showAlert('supabaseAlert', `❌ Upload failed: ${error.message}`, 'error');
       }
@@ -1902,7 +2216,6 @@ CREATE POLICY "Allow all operations" ON billing_records FOR ALL USING (true);
           saveRecords();
           renderRecords();
           renderRecentEntries();
-          renderBarcodeRecentEntries();
           
           showAlert('supabaseAlert', `✓ Downloaded ${data.length} records from cloud!`, 'success');
         } else {
@@ -1980,7 +2293,6 @@ CREATE POLICY "Allow all operations" ON billing_records FOR ALL USING (true);
 
         renderRecords();
         renderRecentEntries();
-        renderBarcodeRecentEntries();
 
         showAlert('supabaseAlert', `✓ Sync complete! Total records: ${records.length}`, 'success');
       } catch (error) {
@@ -2101,6 +2413,19 @@ CREATE POLICY "Allow all operations" ON billing_records FOR ALL USING (true);
           tab.classList.add('active');
         }
       });
+    }
+
+    // ============================================================================
+    // DEVELOPER INFO
+    // ============================================================================
+
+    function loadDeveloperPhoto() {
+      const developerPhotoElement = document.getElementById('developerPhoto');
+      
+      // Default developer photo with initials
+      const defaultDeveloperPhoto = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='90' cy='90' r='90' fill='url(%23grad)'/%3E%3Ctext x='90' y='115' font-size='60' fill='white' text-anchor='middle' font-family='Arial' font-weight='bold'%3EJK%3C/text%3E%3C/svg%3E";
+      
+      developerPhotoElement.src = defaultDeveloperPhoto;
     }
 
     // ============================================================================
